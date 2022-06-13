@@ -1,9 +1,10 @@
 let repeat = 0
-let list: number[] = []
 let num2 = 0
 let num = 0
 let numy = 0
 let numx = 0
+let y = 0
+let x = 0
 let dis = 0
 let test1 = 0
 let LeftPos = 0
@@ -152,25 +153,21 @@ game.onUpdate(function () {
         ................................................................................................................................................................
         ................................................................................................................................................................
         `)
-    LeftPos += controller.player2.dx(10)
+    LeftPos += controller.player2.dx(300)
     for (let index = 0; index <= 159; index++) {
         test1 = dis
         dis += -32
+        x = Math.cos((LeftPos + index * FOV) / 200)
+        y = Math.sin((LeftPos + index * FOV) / 200)
         for (let index2 = 0; index2 < 4; index2++) {
-            if (!(tiles.tileAtLocationEquals(tiles.getTileLocation((mySprite.x + Math.cos((LeftPos + index * FOV) / 200) * dis) / 16, (mySprite.y + Math.sin((LeftPos + index * FOV) / 200) * dis) / 16), assets.tile`transparency16`))) {
+            if (!(tiles.tileAtLocationEquals(tiles.getTileLocation((mySprite.x + x * dis) / 16, (mySprite.y + y * dis) / 16), assets.tile`transparency16`))) {
                 for (let index2 = 0; index2 <= 15; index2++) {
-                    numx = mySprite.x + Math.cos((LeftPos + index * FOV) / 200) * dis
-                    numy = mySprite.y + Math.sin((LeftPos + index * FOV) / 200) * dis
+                    numx = mySprite.x + x * dis
+                    numy = mySprite.y + y * dis
                     if (!(tiles.tileAtLocationEquals(tiles.getTileLocation(numx / 16, numy / 16), assets.tile`transparency16`))) {
-                        num = Math.map(dis * 1, 0, render_dis * 8, 40, 0)
+                        num = Math.map(dis * 1, 0, render_dis * 8, 60, 0)
                         num2 = (60 + num / 0.5 - (60 - num / 0.5)) / 16
-                        for (let index3 = 0; index3 <= 15; index3++) {
-                            list = []
-                            for (let index4 = 0; index4 <= 15; index4++) {
-                                list.push(tiles.tileImageAtLocation(tiles.getTileLocation(numx / 16, numy / 16)).getPixel(numx % 16, index4))
-                            }
-                            scene.backgroundImage().drawLine(index, 60 - num / 2 + index3 * (num2 / 1), index, 60 - num / 2 + (index3 + 1) * (num2 / 1), list[Math.round(index3 * 16 / num2)])
-                        }
+                        scene.backgroundImage().drawLine(index, 60 - num / 1, index, 60 + num / 1, tiles.tileImageAtLocation(tiles.getTileLocation(numx / 16, numy / 16)).getPixel(numx % 16, 8))
                         dis = test1
                         index += 1
                     }
@@ -182,20 +179,14 @@ game.onUpdate(function () {
         dis = 0
         repeat = render_dis
         for (let index2 = 0; index2 < repeat; index2++) {
-            if (!(tiles.tileAtLocationEquals(tiles.getTileLocation((mySprite.x + Math.cos((LeftPos + index * FOV) / 200) * dis) / 16, (mySprite.y + Math.sin((LeftPos + index * FOV) / 200) * dis) / 16), assets.tile`transparency16`))) {
+            if (!(tiles.tileAtLocationEquals(tiles.getTileLocation((mySprite.x + x * dis) / 16, (mySprite.y + y * dis) / 16), assets.tile`transparency16`))) {
                 for (let index2 = 0; index2 <= 15; index2++) {
-                    numx = mySprite.x + Math.cos((LeftPos + index * FOV) / 200) * dis
-                    numy = mySprite.y + Math.sin((LeftPos + index * FOV) / 200) * dis
+                    numx = mySprite.x + x * dis
+                    numy = mySprite.y + y * dis
                     if (!(tiles.tileAtLocationEquals(tiles.getTileLocation(numx / 16, numy / 16), assets.tile`transparency16`))) {
-                        num = Math.map(dis * 1, 0, render_dis * 8, 40, 0)
+                        num = Math.map(dis * 1, 0, render_dis * 8, 60, 0)
                         num2 = (60 + num / 0.5 - (60 - num / 0.5)) / 16
-                        for (let index3 = 0; index3 <= 15; index3++) {
-                            list = []
-                            for (let index4 = 0; index4 <= 15; index4++) {
-                                list.push(tiles.tileImageAtLocation(tiles.getTileLocation(numx / 16, numy / 16)).getPixel(numx % 16, index4))
-                            }
-                            scene.backgroundImage().drawLine(index, 60 - num / 2 + index3 * (num2 / 1), index, 60 - num / 2 + (index3 + 1) * (num2 / 1), list[Math.round(index3 * 16 / num2)])
-                        }
+                        scene.backgroundImage().drawLine(index, 60 - num / 1, index, 60 + num / 1, tiles.tileImageAtLocation(tiles.getTileLocation(numx / 16, numy / 16)).getPixel(numx % 16, 8))
                         repeat = 0
                         break;
                     }
