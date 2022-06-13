@@ -1,4 +1,5 @@
 let repeat = 0
+let list: number[] = []
 let num2 = 0
 let num = 0
 let numy = 0
@@ -25,10 +26,7 @@ let mySprite = sprites.create(img`
     2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 
     2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 
     `, SpriteKind.Player)
-let Detector = sprites.create(img`
-    2 
-    `, SpriteKind.Player)
-let FOV = 0.5
+let FOV = 0.2
 let render_dis = 100
 controller.moveSprite(mySprite)
 game.onUpdate(function () {
@@ -154,7 +152,7 @@ game.onUpdate(function () {
         ................................................................................................................................................................
         ................................................................................................................................................................
         `)
-    LeftPos += controller.player2.dx(400)
+    LeftPos += controller.player2.dx(10)
     for (let index = 0; index <= 159; index++) {
         test1 = dis
         dis += -32
@@ -164,10 +162,14 @@ game.onUpdate(function () {
                     numx = mySprite.x + Math.cos((LeftPos + index * FOV) / 200) * dis
                     numy = mySprite.y + Math.sin((LeftPos + index * FOV) / 200) * dis
                     if (!(tiles.tileAtLocationEquals(tiles.getTileLocation(numx / 16, numy / 16), assets.tile`transparency16`))) {
-                        num = Math.map(dis * 1, 0, render_dis * 8, 60, 0)
-                        num2 = (60 + num - (60 - num)) / 16
-                        for (let index3 = 0; index3 <= 60 + num - (60 - num); index3++) {
-                            scene.backgroundImage().setPixel(index, 60 - num + index3, tiles.tileImageAtLocation(tiles.getTileLocation(numx / 16, numy / 16)).getPixel(numx % 16, index3 / num2))
+                        num = Math.map(dis * 1, 0, render_dis * 8, 40, 0)
+                        num2 = (60 + num / 0.5 - (60 - num / 0.5)) / 16
+                        for (let index3 = 0; index3 <= 15; index3++) {
+                            list = []
+                            for (let index4 = 0; index4 <= 15; index4++) {
+                                list.push(tiles.tileImageAtLocation(tiles.getTileLocation(numx / 16, numy / 16)).getPixel(numx % 16, index4))
+                            }
+                            scene.backgroundImage().drawLine(index, 60 - num / 2 + index3 * (num2 / 1), index, 60 - num / 2 + (index3 + 1) * (num2 / 1), list[Math.round(index3 * 16 / num2)])
                         }
                         dis = test1
                         index += 1
@@ -185,10 +187,14 @@ game.onUpdate(function () {
                     numx = mySprite.x + Math.cos((LeftPos + index * FOV) / 200) * dis
                     numy = mySprite.y + Math.sin((LeftPos + index * FOV) / 200) * dis
                     if (!(tiles.tileAtLocationEquals(tiles.getTileLocation(numx / 16, numy / 16), assets.tile`transparency16`))) {
-                        num = Math.map(dis * 1, 0, render_dis * 8, 60, 0)
-                        num2 = (60 + num - (60 - num)) / 16
-                        for (let index3 = 0; index3 <= 60 + num - (60 - num); index3++) {
-                            scene.backgroundImage().setPixel(index, 60 - num + index3, tiles.tileImageAtLocation(tiles.getTileLocation(numx / 16, numy / 16)).getPixel(numx % 16, index3 / num2))
+                        num = Math.map(dis * 1, 0, render_dis * 8, 40, 0)
+                        num2 = (60 + num / 0.5 - (60 - num / 0.5)) / 16
+                        for (let index3 = 0; index3 <= 15; index3++) {
+                            list = []
+                            for (let index4 = 0; index4 <= 15; index4++) {
+                                list.push(tiles.tileImageAtLocation(tiles.getTileLocation(numx / 16, numy / 16)).getPixel(numx % 16, index4))
+                            }
+                            scene.backgroundImage().drawLine(index, 60 - num / 2 + index3 * (num2 / 1), index, 60 - num / 2 + (index3 + 1) * (num2 / 1), list[Math.round(index3 * 16 / num2)])
                         }
                         repeat = 0
                         break;
